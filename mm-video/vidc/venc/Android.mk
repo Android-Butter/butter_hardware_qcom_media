@@ -32,6 +32,9 @@ libmm-venc-def += -DMAX_RES_1080P
 libmm-venc-def += -DMAX_RES_1080P_EBI
 libmm-venc-def += -DBADGER
 endif
+ifeq ($(TARGET_BOARD_PLATFORM),msm7x30)
+libmm-venc-def += -DMAX_RES_720P
+endif
 ifeq ($(TARGET_USES_ION),true)
 libmm-venc-def += -DUSE_ION
 endif
@@ -50,7 +53,7 @@ endif
 
 libmm-venc-inc      := bionic/libc/include
 libmm-venc-inc      += bionic/libstdc++/include
-libmm-venc-inc      := $(LOCAL_PATH)/inc
+libmm-venc-inc      += $(LOCAL_PATH)/inc
 libmm-venc-inc      += $(OMX_VIDEO_PATH)/vidc/common/inc
 libmm-venc-inc      += hardware/qcom/media/mm-core/inc
 libmm-venc-inc      += hardware/qcom/media/libstagefrighthw
@@ -67,7 +70,6 @@ LOCAL_MODULE                    := libOmxVenc
 LOCAL_MODULE_TAGS               := optional
 LOCAL_CFLAGS                    := $(libmm-venc-def)
 LOCAL_C_INCLUDES                := $(libmm-venc-inc)
-
 LOCAL_PRELINK_MODULE      := false
 LOCAL_SHARED_LIBRARIES    := liblog libutils libbinder libcutils \
                              libc2dcolorconvert libdl
@@ -107,7 +109,6 @@ LOCAL_MODULE                    := mm-venc-omx-test720p
 LOCAL_MODULE_TAGS               := optional
 LOCAL_CFLAGS                    := $(libmm-venc-def)
 LOCAL_C_INCLUDES                := $(mm-venc-test720p-inc)
-#LOCAL_ADDITIONAL_DEPENDENCIES   := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 LOCAL_PRELINK_MODULE            := false
 LOCAL_SHARED_LIBRARIES          := libmm-omxcore libOmxVenc libbinder
 
@@ -130,8 +131,6 @@ LOCAL_MODULE                    := mm-video-encdrv-test
 LOCAL_MODULE_TAGS               := optional
 LOCAL_C_INCLUDES                := $(venc-test-inc)
 LOCAL_C_INCLUDES                += hardware/qcom/media/mm-core/inc
-
-#LOCAL_ADDITIONAL_DEPENDENCIES   := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 LOCAL_PRELINK_MODULE            := false
 
 LOCAL_SRC_FILES                 := test/video_encoder_test.c

@@ -1,6 +1,7 @@
-LOCAL_PATH:= $(call my-dir)
-ifneq ($(filter msm8960,$(TARGET_BOARD_PLATFORM)),)
+ifeq ($(call is-vendor-board-platform,QCOM),true)
+ifneq ($(TARGET_QCOM_DISPLAY_VARIANT),legacy)
 
 include $(call all-subdir-makefiles)
 
+endif
 endif
